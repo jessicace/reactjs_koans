@@ -47,7 +47,8 @@ class GroceryList extends React.Component {
           completed: false
         }
       ],
-      newGroceryName: ""
+        newGroceryName: "",
+        submitDisabled: "true"
     };
 
     this.addGroceryItem = this.addGroceryItem.bind(this);
@@ -56,7 +57,11 @@ class GroceryList extends React.Component {
   }
 
   inputChanged(event) {
-    this.setState({ newGroceryName: event.target.value });
+      this.setState({
+          newGroceryName: event.target.value,
+          submitDisabled: "false"
+      });
+      
   }
 
   addGroceryItem() {
@@ -75,7 +80,18 @@ class GroceryList extends React.Component {
   // Fill the definition of the following method to allow completing each item
   // Hint 1: Pay attention to the element's index on the list.
   toggleGroceryCompleteness(groceryIndex) {
-    // Put your code here
+      // Put your code here
+      let grocery = this.state.groceries[groceryIndex];
+      this.setState({
+          groceries: this.state.groceries.map(function(object) {
+              if (object === grocery) {
+                  grocery.completed = true;
+                  return grocery;
+              } else {
+                  return object
+              }
+          })
+      });
   }
 
   render() {
@@ -86,8 +102,9 @@ class GroceryList extends React.Component {
     for(var index = 0; index < this.state.groceries.length; index++) {
       groceriesComponents.push(
           <GroceryListItem
-            grocery={this.state.groceries[index]}
-            onComplete={this.toggleGroceryCompleteness.bind(this, index)}
+              grocery={this.state.groceries[index]}
+              onComplete={this.toggleGroceryCompleteness.bind(this, index)}
+              disabled={this.state.submitDisabled}
           />
       );
     }
@@ -95,7 +112,7 @@ class GroceryList extends React.Component {
     newProductInput = <input className='new-item' type="text" onChange={this.inputChanged}/>;
     newProductAddButton = <button className='add-product' onClick={this.addGroceryItem}>Add new Product</button>;
     clearListButton = <button className='clear-list' onClick={this.clearList}>Clear the List</button>;
-
+      
     return (
       <div>
         <ul>
