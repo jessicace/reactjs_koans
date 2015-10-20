@@ -55,7 +55,8 @@ class LifecycleMethodsComponent extends React.Component {
   componentDidMount() {
     // Task 1: Display a message "I'm mounted!" in developer's console when the
     //         component finishes mounting.
-    //         Use `console.log` function for it.
+      //         Use `console.log` function for it.
+      console.log("I'm mounted!");
   }
 
   componentDidUpdate(prevProps, prevState) {
